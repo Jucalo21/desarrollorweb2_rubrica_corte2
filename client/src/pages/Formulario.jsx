@@ -86,7 +86,7 @@ return (
                 placeholder='Ingrese el Nombre' 
                 name='nombre_cliente'
                 onChange={handleChange}
-                value={values.nombre_cliente} 
+                value={values.nombre_cliente}
                 />
                 <label className='form-label'>Telefono</label>
                 <input 
