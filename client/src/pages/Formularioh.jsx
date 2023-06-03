@@ -1,4 +1,5 @@
 import React from 'react'
+import * as Yup from 'yup'
 import {Formik,Form} from 'formik'
 import { useUsuario } from '../context/UsuarioProvider'
 import { useParams } from 'react-router-dom'
@@ -11,6 +12,16 @@ const Formularioh = () => {
         tipo:"",
         valor:""
     })
+
+    const isRequired= 'Campo obligatorio'
+    const validationSchema=Yup.object({
+        numero:Yup.number().required(isRequired),
+        tipo:Yup.string().required(isRequired)
+        .oneOf(["individual","doble","cuadruple"],"Selecciona una de las opciones"),
+        valor:Yup.number().required(isRequired)
+        
+    })
+
     React.useEffect(()=>{
         const cargarHabitacion=async()=>{
             if (id) {
@@ -30,6 +41,7 @@ const Formularioh = () => {
             </h2>
             <Formik
             initialValues={habitacion}
+            validationSchema={validationSchema}
             enableReinitialize={true}
             
             onSubmit={async(values,actions)=>{

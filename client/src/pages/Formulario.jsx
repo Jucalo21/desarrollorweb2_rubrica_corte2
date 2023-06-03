@@ -1,4 +1,5 @@
 import React from 'react'
+import * as Yup from 'yup'
 import {Formik,Form} from 'formik'
 import { useUsuario } from '../context/UsuarioProvider'
 import { useParams } from 'react-router-dom'
@@ -15,6 +16,18 @@ const Formulario = () => {
         fecha_entrada:"",
         fecha_salida:""
     })
+
+    const isRequired= 'Campo obligatorio'
+    const validationSchema=Yup.object({
+        habitacion_codigo:Yup.number().required(isRequired),
+        nombre_cliente:Yup.string().required(isRequired),
+        telefono_cliente:Yup.number().required(isRequired),
+        fecha_reservacion:Yup.date().required(isRequired),
+        fecha_entrada:Yup.date().required(isRequired),
+        fecha_salida:Yup.date().required(isRequired)
+        
+    })
+
     React.useEffect(()=>{
         const cargarReserva=async()=>{
             if (id) {
@@ -34,6 +47,7 @@ return (
         </h2>
         <Formik
         initialValues={reserva}
+        validationSchema={validationSchema}
         enableReinitialize={true}
 
         onSubmit={async(values,actions)=>{
